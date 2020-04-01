@@ -1,4 +1,4 @@
-FROM ortools:fedora_swig AS env
+FROM ortools/cmake:fedora_swig AS env
 # see: https://docs.microsoft.com/en-us/dotnet/core/install/linux-package-manager-fedora31
 RUN rpm --import https://packages.microsoft.com/keys/microsoft.asc \
 && wget -q -O /etc/yum.repos.d/microsoft-prod.repo https://packages.microsoft.com/config/fedora/31/prod.repo \
@@ -25,7 +25,7 @@ COPY --from=build /usr/local /usr/local/
 
 FROM install_env AS install_devel
 WORKDIR /home/sample
-COPY ci/sample .
+COPY cmake/samples/dotnet .
 
 FROM install_devel AS install_build
 RUN cmake -S. -Bbuild -DBUILD_DOTNET=ON

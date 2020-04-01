@@ -1,4 +1,4 @@
-FROM ortools:ubuntu_swig AS env
+FROM ortools/cmake:ubuntu_swig AS env
 RUN apt-get update -qq \
 && apt-get install -yq default-jdk maven \
 && apt-get clean \
@@ -21,7 +21,7 @@ COPY --from=build /usr/local /usr/local/
 
 FROM install_env AS install_devel
 WORKDIR /home/sample
-COPY ci/sample .
+COPY cmake/samples/java .
 
 FROM install_devel AS install_build
 RUN cmake -S. -Bbuild -DBUILD_DOTNET=ON

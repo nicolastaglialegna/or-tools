@@ -1,4 +1,4 @@
-FROM ortools:debian_base AS env
+FROM ortools/cmake:debian_base AS env
 RUN cmake -version
 
 FROM env AS devel
@@ -18,7 +18,7 @@ COPY --from=build /usr/local /usr/local/
 
 FROM install_env AS install_devel
 WORKDIR /home/sample
-COPY ci/sample .
+COPY cmake/samples/cpp .
 
 FROM install_devel AS install_build
 RUN cmake -S. -Bbuild

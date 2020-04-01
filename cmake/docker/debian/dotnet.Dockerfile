@@ -1,4 +1,4 @@
-FROM ortools:debian_swig AS env
+FROM ortools/cmake:debian_swig AS env
 # see: https://docs.microsoft.com/en-us/dotnet/core/install/linux-package-manager-debian10
 RUN apt-get update -qq \
 && apt-get install -yq wget gpg apt-transport-https \
@@ -30,7 +30,7 @@ COPY --from=build /usr/local /usr/local/
 
 FROM install_env AS install_devel
 WORKDIR /home/sample
-COPY ci/sample .
+COPY cmake/samples/dotnet .
 
 FROM install_devel AS install_build
 RUN cmake -S. -Bbuild -DBUILD_DOTNET=ON

@@ -1,4 +1,4 @@
-FROM ortools:archlinux_swig AS env
+FROM ortools/cmake:archlinux_swig AS env
 RUN pacman -Syu --noconfirm dotnet-sdk
 
 FROM env AS devel
@@ -18,7 +18,7 @@ COPY --from=build /usr/local /usr/local/
 
 FROM install_env AS install_devel
 WORKDIR /home/sample
-COPY ci/sample .
+COPY cmake/samples/dotnet .
 
 FROM install_devel AS install_build
 RUN cmake -S. -Bbuild -DBUILD_DOTNET=ON

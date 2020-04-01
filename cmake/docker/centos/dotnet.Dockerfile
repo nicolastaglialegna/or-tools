@@ -1,4 +1,4 @@
-FROM ortools:centos_swig AS env
+FROM ortools/cmake:centos_swig AS env
 # see https://docs.microsoft.com/en-us/dotnet/core/install/linux-package-manager-centos7
 RUN rpm -Uvh "https://packages.microsoft.com/config/rhel/7/packages-microsoft-prod.rpm" \
 && yum -y update \
@@ -23,7 +23,7 @@ COPY --from=build /usr/local /usr/local/
 
 FROM install_env AS install_devel
 WORKDIR /home/sample
-COPY ci/sample .
+COPY cmake/samples/dotnet .
 
 FROM install_devel AS install_build
 RUN cmake -S. -Bbuild -DBUILD_DOTNET=ON
