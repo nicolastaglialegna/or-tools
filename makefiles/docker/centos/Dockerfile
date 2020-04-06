@@ -5,7 +5,8 @@ LABEL maintainer="corentinl@google.com"
 # Install system build dependencies
 ENV PATH=/usr/local/bin:$PATH
 RUN yum -y update \
-&& yum -y install git wget openssl-devel \
+&& yum -y install \
+ git wget which openssl-devel \
 && yum -y groupinstall "Development Tools" \
 && yum clean all \
 && rm -rf /var/cache/yum
